@@ -1,21 +1,32 @@
-process.env.NTBA_FIX_319 = "1";
+// process.env.NTBA_FIX_319 = "1";
 
-import TelegramBot from 'node-telegram-bot-api';
-import dotenv from 'dotenv';
-import { CryptoSymbols } from './models/CryptoSymbols';
+import { CryptoPrices } from "./models/CryptoPrices";
+import { CryptoSymbols } from "./models/CryptoSymbols";
 
-dotenv.config();
+// import TelegramBot from 'node-telegram-bot-api';
+// import dotenv from 'dotenv';
+// import { CryptoSymbols } from './models/CryptoSymbols';
 
-const token = process.env.TELEGRAM_TOKEN;
+// dotenv.config();
 
-const bot = new TelegramBot(token!, { polling: true });
+// const token = process.env.TELEGRAM_TOKEN;
 
-bot.on("message", (msg) => {
-    const chatId = msg.chat.id;
+// const bot = new TelegramBot(token!, { polling: true });
 
-    bot.sendMessage(chatId, "Hey! I don't know how you are or what you want. But I like you, just for being here with me.")
-});
+// bot.on("message", (msg) => {
+//     const chatId = msg.chat.id;
 
-const cryptoSymbols = new CryptoSymbols();
-console.log();
+//     bot.sendMessage(chatId, "Hey! I don't know how you are or what you want. But I like you, just for being here with me.")
+// });
 
+
+const main = async() => {
+    const coingeckoCryptos = new CryptoSymbols();
+    await coingeckoCryptos.mergeAvailableCryptos();
+    const availableCryptos = coingeckoCryptos.getSymbols();
+    
+    const cryptoBot = new CryptoPrices(availableCryptos);
+    cryptoBot.start();
+}
+
+main();

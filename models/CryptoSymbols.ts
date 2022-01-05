@@ -7,10 +7,6 @@ export class CryptoSymbols {
     private binanceAPIUrl = "https://api.binance.com/api/v3/exchangeInfo";
     private binanceAvailableSymbols: CoingeckoSymbols[] = [];
 
-    constructor() {
-        this.joinSymbols();
-    }
-
     private async getBinanceSymbols(): Promise<BinanceSymbolsResponse> {
         try {
             const { data } = await axios.get<BinanceSymbols>(this.binanceAPIUrl);
@@ -60,6 +56,10 @@ export class CryptoSymbols {
                 }
             }
         }
+    }
+
+    public async mergeAvailableCryptos() {
+        await this.joinSymbols();
     }
 
     public getSymbols() {
