@@ -299,6 +299,8 @@ export interface Market {
 }
 
 export interface CryptoInfo extends CoingeckoSymbols{
+    alert:              boolean;
     index:              number;
-    priceTenMinAgo:     number;
+    lastPrice:          number;
+    checkTime:          number;
 }

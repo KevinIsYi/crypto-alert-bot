@@ -44,9 +44,12 @@ export class CryptoSymbols {
             const { data: { symbols: binanceSymbols } } = binanceSymbolsResponse;
             const { data: coingeckoData } = coingeckoSymbolsResponse;
 
-            for (const { baseAsset } of binanceSymbols) {
-                symbols.add(baseAsset);
+            for (const { baseAsset, quoteAsset, status } of binanceSymbols) {
+                if ((quoteAsset === "USDT" || quoteAsset === "BUSD") && status === "TRADING") {
+                    symbols.add(baseAsset);       
+                }
             }
+            
 
             for (const crypto of coingeckoData) {
                 const { symbol } = crypto;
