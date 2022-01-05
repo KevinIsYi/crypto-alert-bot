@@ -1,4 +1,4 @@
-import { BinanceSymbols, CoingeckoSymbols } from "../interfaces/interfaces";
+import { BinanceSymbols, CoingeckoSymbols, CryptoInfo } from "../interfaces/interfaces";
 
 export type BinanceSymbolsResponse =
     { ok: true, data: BinanceSymbols }
@@ -7,5 +7,10 @@ export type BinanceSymbolsResponse =
 
 export type CoingeckoSymbolsResponse =
     { ok: true, data: CoingeckoSymbols[] }
+    |
+    { ok: false }
+
+export type CryptoInfoResponse =
+    { ok: true, data: CryptoInfo }
     |
     { ok: false }
