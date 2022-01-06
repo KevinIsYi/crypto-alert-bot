@@ -304,3 +304,9 @@ export interface CryptoInfo extends CoingeckoSymbols{
     lastPrice:          number;
     checkTime:          number;
 }
+
+export interface TelegramManagmentUsers {
+    isBlocked:          boolean;
+    numberOfAlerts:     number;
+    telegramChatId:     number;
+}
