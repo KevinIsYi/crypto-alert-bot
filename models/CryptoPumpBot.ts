@@ -105,14 +105,15 @@ export class CryptoPumpBot {
         try {
             const { data } = await axios.get<CoinGeckoCryptoInfo>(`${this.coingeckoBaseURL}/${crypto.id}`);
             const { market_data: { current_price } } = data;
-
-
+            
             if (isNaN(current_price["usd"])) {
                 return {
                     ok: false
                 }
             }
 
+            console.log(`Request: ${crypto.symbol.toUpperCase()}. Current Price: ${Number(current_price["usd"])} `);
+            
             return {
                 ok: true,
                 data: {
