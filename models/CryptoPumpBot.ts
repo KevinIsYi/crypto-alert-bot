@@ -20,10 +20,18 @@ export class CryptoPumpBot {
             const chatId = msg.chat.id;
 
             if (msg.text === process.env.STOP_BOT_MESSAGE) {
+                this.isProcessRunning = false;
                 this.stop();
             }
+            else if (msg.text === process.env.START_BOT_MESSAGE) {
+                this.isProcessRunning = true;
+                this.start();
+            }
             else {
-                if (this.telegramUsers[chatId]) {
+                if (!this.isProcessRunning) {
+                    this.bot.sendMessage(chatId, `I'm not working right now... 💤💤💤`);
+                }
+                else if (this.telegramUsers[chatId]) {
                     const telegramUserInfo: TelegramManagmentUsers = this.telegramUsers[chatId];
                     const { isBlocked, numberOfAlerts, telegramChatId } = telegramUserInfo;
 
@@ -42,8 +50,6 @@ export class CryptoPumpBot {
             }
 
         });
-
-        this.start();
     }
 
     private welcomeMessage(chatId: number) {
@@ -59,7 +65,6 @@ export class CryptoPumpBot {
             isBlocked: false,
         }
         this.telegramUsers[chatId] = newUser;
-
     }
 
     private async sendAlert(symbol: string, prevPrice: number, currentPrice: number, diffMins: number, pricePercDiff: number) {
@@ -129,8 +134,6 @@ export class CryptoPumpBot {
     }
 
     private stop() {
-        this.isProcessRunning = false;
-
         for (const key in this.telegramUsers) {
             const { telegramChatId }: TelegramManagmentUsers = this.telegramUsers[key];
 
@@ -139,8 +142,6 @@ export class CryptoPumpBot {
     }
 
     private async start() {
-        this.isProcessRunning = true;
-
         await this.coingeckoCryptos.mergeAvailableCryptos();
         this.availableCryptos = this.coingeckoCryptos.getSymbols();
 
@@ -166,8 +167,5 @@ export class CryptoPumpBot {
 
         console.log("PROCESS HAS STOPPED");
         console.log(this.telegramUsers);
-        
-        
-
     }
 }
