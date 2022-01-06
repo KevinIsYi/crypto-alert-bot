@@ -66,8 +66,7 @@ export class CryptoPumpBot {
         for (const key in this.telegramUsers) {
             const { telegramChatId }: TelegramManagmentUsers = this.telegramUsers[key];
 
-            this.bot.sendMessage(telegramChatId, `Price of: ${symbol.toUpperCase()} has changed from: ${prevPrice} to ${currentPrice} in ${diffMins} minutes`);
-            this.bot.sendMessage(telegramChatId, `Difference: ${pricePercDiff} %`);
+            this.bot.sendMessage(telegramChatId, `🚨🚨🚨 Price of: ${symbol.toUpperCase()} has changed from: ${prevPrice} to ${currentPrice} in ${diffMins} minutes. Wich is a difference of ${pricePercDiff} %. 🚨🚨🚨`);
         }
     }
 
@@ -135,7 +134,7 @@ export class CryptoPumpBot {
         for (const key in this.telegramUsers) {
             const { telegramChatId }: TelegramManagmentUsers = this.telegramUsers[key];
 
-            this.bot.sendMessage(telegramChatId, "I'm going to sleep. I'll send a message when I'm back. 💤💤💤");
+            this.bot.sendMessage(telegramChatId, "I'm going to sleep. I'll send a message when I get back. 💤💤💤");
         }
     }
 
