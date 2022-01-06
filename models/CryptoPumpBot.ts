@@ -20,10 +20,14 @@ export class CryptoPumpBot {
             const chatId = msg.chat.id;
 
             if (msg.text === process.env.STOP_BOT_MESSAGE) {
+                console.log("STOP ORDER");
+
                 this.isProcessRunning = false;
                 this.stop();
             }
             else if (msg.text === process.env.START_BOT_MESSAGE) {
+                console.log("START ORDER");
+
                 this.isProcessRunning = true;
                 this.start();
             }
@@ -105,7 +109,7 @@ export class CryptoPumpBot {
         try {
             const { data } = await axios.get<CoinGeckoCryptoInfo>(`${this.coingeckoBaseURL}/${crypto.id}`);
             const { market_data: { current_price } } = data;
-            
+
             if (isNaN(current_price["usd"])) {
                 return {
                     ok: false
@@ -113,7 +117,7 @@ export class CryptoPumpBot {
             }
 
             console.log(`Request: ${crypto.symbol.toUpperCase()}. Current Price: ${Number(current_price["usd"])} `);
-            
+
             return {
                 ok: true,
                 data: {
@@ -145,6 +149,7 @@ export class CryptoPumpBot {
     private async start() {
         await this.coingeckoCryptos.mergeAvailableCryptos();
         this.availableCryptos = this.coingeckoCryptos.getSymbols();
+        console.log("Available: ", this.availableCryptos);
 
         for (let index = 0; this.isProcessRunning;) {
             if (this.cryptosInformation.length < this.availableCryptos.length) {
