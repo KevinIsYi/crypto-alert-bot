@@ -1,4 +1,6 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from "express";
+
+const express = require("express");
 
 export class ApiServer {
     private app = express();
